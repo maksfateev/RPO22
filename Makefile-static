@@ -1,0 +1,25 @@
+all: encoder decoder
+
+encoder: encoder.o libmin.a
+	gcc -std=c99 -o encoder encoder.o -L. -lmin 
+
+decoder: decoder.o libmin.a
+	gcc -std=c99 -o decoder decoder.o -L. -lmin
+	
+encoder.o: encoder.c
+	gcc -c -std=c99 encoder.c
+
+decoder.o: decoder.c
+	gcc -c -std=c99 decoder.c
+	
+libmin.a: lineliber.o cip.o
+	ar cr libmin.a lineliber.o cip.o
+	
+lineliber.o: lineliber.c
+	gcc -c -std=c99 lineliber.c
+	
+cip.o: cip.c
+	gcc -c -std=c99 cip.c
+
+clean:
+	rm -rf *.o *.a encoder decoder
